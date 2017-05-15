@@ -1,0 +1,19 @@
+build/
+captures/
+.bundle/
+local.properties
+.gradle/
+
+# intellij
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# misc
+.DS_Store
+*~
+*.swp
+
+# Firebase config file
+google-services.json
