@@ -1,2 +1,2 @@
-# groundhog
-Weather app for Android
+# Groundhog
+A Weather app for Android.
