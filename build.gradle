@@ -1,10 +1,13 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+
     ext.kotlin_version = '1.1.2-3'
+
     repositories {
         jcenter()
     }
+
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -17,6 +20,24 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven { url 'https://maven.google.com' }
+    }
+
+    /**
+     * Get an array of directory paths that should be used as resource directories
+     * @return Array of directory paths
+     */
+    ext.getResourceDirectories = { String rootDirectory ->
+        def resourceDirectories = []
+        def resourceDirectoryName = "res";
+
+        new File(rootDirectory).eachDirRecurse { directory ->
+            if (directory.getName() == resourceDirectoryName) {
+                resourceDirectories << directory.getAbsolutePath()
+            }
+        }
+
+        return resourceDirectories;
     }
 }
 
