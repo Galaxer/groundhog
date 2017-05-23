@@ -1,24 +1,27 @@
 package ccook.info.groundhog.weather
 
 import android.Manifest
-import android.arch.lifecycle.LifecycleRegistry
-import android.arch.lifecycle.LifecycleRegistryOwner
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import android.arch.lifecycle.*
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import ccook.info.groundhog.App
+import ccook.info.groundhog.BaseActivity
 import ccook.info.groundhog.R
 import kotlinx.android.synthetic.main.activity_main.*
 import pub.devrel.easypermissions.EasyPermissions
+import javax.inject.Inject
 
-class WeatherActivity : AppCompatActivity(), LifecycleRegistryOwner {
+class WeatherActivity : BaseActivity(), LifecycleRegistryOwner {
 
     val lifecycleRegistry = LifecycleRegistry(this)
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val weatherViewModel =  ViewModelProviders.of(this).get(WeatherViewModel::class.java)
+        val weatherViewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(WeatherViewModel::class.java)
 
         if (hasFineLocationPermission()) {
             weatherViewModel.getLocation().observe(this, Observer { location ->
@@ -28,6 +31,13 @@ class WeatherActivity : AppCompatActivity(), LifecycleRegistryOwner {
         } else {
             requestFineLocationPermission()
         }
+    }
+
+    override fun injectDependencies() {
+        DaggerWeatherComponent.builder()
+                .appComponent((application as App).component)
+                .build()
+                .inject(this)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
