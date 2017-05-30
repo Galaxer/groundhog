@@ -3,11 +3,11 @@ package ccook.info.groundhog
 import android.app.Application
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
-import ccook.info.groundhog.weather.CurrentLocation
+import ccook.info.groundhog.location.CurrentLocation
 import com.google.android.gms.location.LocationRequest
+import com.patloew.rxlocation.RxLocation
 import dagger.Module
 import dagger.Provides
-import pl.charmas.android.reactivelocation.ReactiveLocationProvider
 import javax.inject.Singleton
 
 @Module(subcomponents = arrayOf(ViewModelSubComponent::class))
@@ -26,8 +26,7 @@ class AppModule constructor(private val application: Application) {
 
     @Singleton
     @Provides
-    fun provideLocationProvider(context: Context): ReactiveLocationProvider =
-            ReactiveLocationProvider(context)
+    fun provideLocationProvider(context: Context): RxLocation = RxLocation(context)
 
     @Singleton
     @Provides
@@ -36,7 +35,7 @@ class AppModule constructor(private val application: Application) {
 
     @Singleton
     @Provides
-    fun provideCurrentLocation(locationProvider: ReactiveLocationProvider,
+    fun provideCurrentLocation(locationProvider: RxLocation,
                                locationRequest: LocationRequest): CurrentLocation =
             CurrentLocation(locationProvider, locationRequest)
 }

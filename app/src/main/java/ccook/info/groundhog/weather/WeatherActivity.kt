@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class WeatherActivity : BaseActivity(), LifecycleRegistryOwner {
 
-    val lifecycleRegistry = LifecycleRegistry(this)
+    private val lifecycleRegistry = LifecycleRegistry(this)
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -48,10 +48,10 @@ class WeatherActivity : BaseActivity(), LifecycleRegistryOwner {
 
     override fun getLifecycle(): LifecycleRegistry = lifecycleRegistry
 
-    fun hasFineLocationPermission() = EasyPermissions
+    private fun hasFineLocationPermission() = EasyPermissions
             .hasPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION)
 
-    fun requestFineLocationPermission() {
+    private fun requestFineLocationPermission() {
         EasyPermissions.requestPermissions(this, getString(R.string.gps_request_message), 100,
                 Manifest.permission.ACCESS_FINE_LOCATION)
     }
