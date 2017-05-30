@@ -36,14 +36,11 @@ android {
 dependencies {
 
     // Reactive locations
-    compile 'pl.charmas.android:android-reactive-location:0.10@aar'
+    compile 'com.patloew.rxlocation:rxlocation:1.0.3'
 
     // Play services
     compile 'com.google.android.gms:play-services-location:10.2.6'
     compile 'com.google.android.gms:play-services-places:10.2.6'
-
-    // RxJava (For executing asynchronous event based code)
-    compile 'io.reactivex:rxjava:1.2.0'
 
     // Library for simplifying runtime permissions
     compile 'pub.devrel:easypermissions:0.4.0'
@@ -73,9 +70,12 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.8.9'
+    androidTestCompile group: 'org.mockito', name: 'mockito-android', version: '2.8.9'
 
     // Kotlin
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }
 
 repositories {

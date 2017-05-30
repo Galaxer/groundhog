@@ -1,20 +1,20 @@
-package ccook.info.groundhog.weather
+package ccook.info.groundhog.location
 
 import android.arch.lifecycle.MutableLiveData
 import android.location.Location
 import com.google.android.gms.location.LocationRequest
-import pl.charmas.android.reactivelocation.ReactiveLocationProvider
-import rx.Subscription
+import com.patloew.rxlocation.RxLocation
+import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 class CurrentLocation @Inject constructor(
-        private val locationProvider: ReactiveLocationProvider,
+        private val locationProvider: RxLocation,
         private val locationRequest: LocationRequest) : MutableLiveData<Location>() {
 
-    lateinit var subscription: Subscription
+    private lateinit var disposable: Disposable
 
     override fun onActive() {
-        subscription = locationProvider.getUpdatedLocation(locationRequest)
+        disposable = locationProvider.location().updates(locationRequest)
                 .take(1)
                 .subscribe { updatedLocation ->
                     postValue(updatedLocation)
@@ -22,6 +22,6 @@ class CurrentLocation @Inject constructor(
     }
 
     override fun onInactive() {
-        subscription.unsubscribe()
+        disposable.dispose()
     }
 }
