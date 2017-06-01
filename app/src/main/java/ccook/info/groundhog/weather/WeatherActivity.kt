@@ -3,7 +3,6 @@ package ccook.info.groundhog.weather
 import android.Manifest
 import android.arch.lifecycle.*
 import android.os.Bundle
-import ccook.info.groundhog.App
 import ccook.info.groundhog.BaseActivity
 import ccook.info.groundhog.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -31,13 +30,6 @@ class WeatherActivity : BaseActivity(), LifecycleRegistryOwner {
         } else {
             requestFineLocationPermission()
         }
-    }
-
-    override fun injectDependencies() {
-        DaggerWeatherComponent.builder()
-                .appComponent((application as App).component)
-                .build()
-                .inject(this)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,

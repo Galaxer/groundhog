@@ -58,6 +58,11 @@ dependencies {
     compile 'com.google.dagger:dagger:2.10'
     kapt 'com.google.dagger:dagger-compiler:2.10'
 
+    // Dagger 2 Android (Android specific dagger functionality)
+    compile 'com.google.dagger:dagger-android:2.10'
+    compile 'com.google.dagger:dagger-android-support:2.10'
+    kapt 'com.google.dagger:dagger-android-processor:2.10'
+
     // Android Room Database
     compile "android.arch.persistence.room:runtime:1.0.0-alpha1"
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0-alpha1"
@@ -65,11 +70,19 @@ dependencies {
     // Include local dependencies
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    // Testing
+    /**
+     * Espresso for UI automated testing. The jsr305 module was causing conflicts with another
+     * dependency that has a newer version, so it is being excluded here.
+     */
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
+        exclude module: 'jsr305'
     })
+
+    // JUnit for unit testing
     testCompile 'junit:junit:4.12'
+
+    // Mockito for mocking in unit test
     testCompile 'org.mockito:mockito-core:2.8.9'
     androidTestCompile group: 'org.mockito', name: 'mockito-android', version: '2.8.9'
 
