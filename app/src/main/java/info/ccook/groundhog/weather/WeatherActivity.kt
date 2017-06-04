@@ -49,7 +49,7 @@ class WeatherActivity : BaseActivity(), LifecycleRegistryOwner {
             .hasPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION)
 
     private fun requestFineLocationPermission() {
-        EasyPermissions.requestPermissions(this, getString(R.string.gps_request_message), 100,
+        EasyPermissions.requestPermissions(this, getString(R.string.gpsRequestMessage), 100,
                 Manifest.permission.ACCESS_FINE_LOCATION)
     }
 }
