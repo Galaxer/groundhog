@@ -9,7 +9,7 @@ android {
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        applicationId "ccook.info.groundhog"
+        applicationId "info.ccook.groundhog"
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
@@ -35,8 +35,14 @@ android {
 
 dependencies {
 
+    // Open weather map API wrapper
+    compile 'com.visuality.f32forandroid:f32:2.2'
+
     // Reactive locations
     compile 'com.patloew.rxlocation:rxlocation:1.0.3'
+
+    // Firebase remote config
+    compile 'com.google.firebase:firebase-config:10.2.6'
 
     // Play services
     compile 'com.google.android.gms:play-services-location:10.2.6'
@@ -94,3 +100,5 @@ dependencies {
 repositories {
     mavenCentral()
 }
+
+apply plugin: 'com.google.gms.google-services'

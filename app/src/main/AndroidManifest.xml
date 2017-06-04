@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    package="ccook.info.groundhog"
+    package="info.ccook.groundhog"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -15,15 +15,20 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".App"
+        android:name="info.ccook.groundhog.App"
         android:theme="@style/AppTheme">
-        <activity android:name=".weather.WeatherActivity">
+        <activity android:name="info.ccook.groundhog.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity
+            android:label="@string/app_name"
+            android:name="info.ccook.groundhog.weather.WeatherActivity" />
+
     </application>
 
 </manifest>
