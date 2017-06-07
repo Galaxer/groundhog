@@ -8,6 +8,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.patloew.rxlocation.RxLocation
 import dagger.Module
 import dagger.Provides
+import info.ccook.groundhog.config.AppConfig
 import info.ccook.groundhog.location.CurrentLocation
 import javax.inject.Singleton
 

@@ -17,7 +17,9 @@
         android:supportsRtl="true"
         android:name="info.ccook.groundhog.App"
         android:theme="@style/AppTheme">
-        <activity android:name="info.ccook.groundhog.splash.SplashActivity">
+        <activity
+            android:name="info.ccook.groundhog.splash.SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
