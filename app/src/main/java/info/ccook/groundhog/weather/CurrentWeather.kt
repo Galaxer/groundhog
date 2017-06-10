@@ -5,26 +5,32 @@ import android.location.Location
 import com.visuality.f32.temperature.TemperatureUnit
 import com.visuality.f32.weather.data.entity.Weather
 import com.visuality.f32.weather.manager.WeatherManager
+import info.ccook.groundhog.Emission
 import info.ccook.groundhog.config.AppConfig
 import javax.inject.Inject
 
-class CurrentWeather @Inject constructor(appConfig: AppConfig) : LiveData<CurrentWeather.Data>() {
+class CurrentWeather @Inject constructor(
+        appConfig: AppConfig) : LiveData<Emission<CurrentWeather.Data>>() {
+
+    companion object {
+        val ERROR_MESSAGE = "Error getting current weather by coordinates"
+    }
 
     private val weatherManager = WeatherManager(appConfig.value?.data?.openWeatherMapApiKey)
 
-    fun getByCoordinates(location: Location?): LiveData<Data> {
-        if (location != null) {
-            weatherManager.getCurrentWeatherByCoordinates(location.latitude, location.longitude,
-                    object : WeatherManager.CurrentWeatherHandler {
-                        override fun onReceivedCurrentWeather(manager: WeatherManager,
-                                                              weather: Weather) {
-                            postValue(Data(weather))
-                        }
+    fun getByCoordinates(location: Location) {
+        postValue(Emission.loading())
+        weatherManager.getCurrentWeatherByCoordinates(location.latitude, location.longitude,
+                object : WeatherManager.CurrentWeatherHandler {
+                    override fun onFailedToReceiveCurrentWeather(manager: WeatherManager) {
+                        postValue(Emission.error(ERROR_MESSAGE))
+                    }
 
-                        override fun onFailedToReceiveCurrentWeather(manager: WeatherManager) {}
-                    })
-        }
-        return this
+                    override fun onReceivedCurrentWeather(manager: WeatherManager,
+                                                          weather: Weather) {
+                        postValue(Emission.success(Data(weather)))
+                    }
+                })
     }
 
     data class Data(private val weather: Weather) {
